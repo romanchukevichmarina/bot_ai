@@ -27,3 +27,11 @@ def get_last_commands(user_id: int):
         result = cursor.fetchall()
         if result:
             return result
+
+def count_messages(user_id: int):
+    with sqlite3.connect('database.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM messages WHERE user_id = ? AND text = '/newquestion' AND DATE(datetime) = DATE('now');", (user_id, ))
+        result = cursor.fetchall()
+        if result:
+            return result[0][0]
